@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Личный кабинет клиента</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #2c2c2c;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    fieldset {
+      border: 1px solid #444;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: #3a3a3a;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #ffd700;
+      padding: 0 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #666;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #444;
+      color: #fff;
+    }
+
+    td {
+      background-color: #2e2e2e;
+    }
+
+    strong {
+      color: #ff4c4c;
+    }
+
+    nav {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    nav h2 {
+      color: #a0a0a0;
+      margin-bottom: 10px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    nav li {
+      display: inline-block;
+      margin: 0 10px;
+    }
+
+    nav a {
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Добро пожаловать, Иванов Иван Иванович</h1>
+
+      <fieldset>
+        <legend>Ваши данные</legend>
+        <ul>
+          <li>Телефон: +375291234567</li>
+          <li>Email: ivan@example.com</li>
+          <li>Статус: активный</li>
+        </ul>
+      </fieldset>
+
+      <fieldset>
+        <legend>Счёт клиента</legend>
+        <ul>
+          <li>Баланс: 12.50 BYN</li>
+          <li>Абонентская плата: 20.00 BYN</li>
+          <li>Лимит местных минут: 100</li>
+          <li>Кредитные минуты: 30</li>
+        </ul>
+      </fieldset>
+
+      <fieldset>
+        <legend>Последние звонки</legend>
+        <table>
+          <tr><th>Дата</th><th>Тип</th><th>Длительность</th><th>Стоимость</th></tr>
+          <tr><td>01.10.2025</td><td>Местный</td><td>12 мин</td><td>0.00 BYN</td></tr>
+          <tr><td>02.10.2025</td><td>Международный</td><td>5 мин</td><td>2.50 BYN</td></tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>Последние платежи</legend>
+        <table>
+          <tr><th>Дата</th><th>Сумма</th><th>Статус</th></tr>
+          <tr><td>30.09.2025</td><td>50.00 BYN</td><td>Успешно</td></tr>
+          <tr><td>01.09.2025</td><td>20.00 BYN</td><td>Абонплата</td></tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>Задолженность</legend>
+        <p>Текущий баланс: -5.00 BYN</p>
+        <p>Использовано кредитных минут: 12 из 30</p>
+        <p><strong>Пожалуйста, пополните счёт, чтобы избежать блокировки.</strong></p>
+      </fieldset>
+
+      <nav>
+        <h2>Действия</h2>
+        <ul>
+          <li><a href="Пополнить счёт.html">Пополнить счёт</a></li>
+          <li><a href="calls.html">История звонков</a></li>
+          <li><a href="payments.html">История платежей</a></li>
+          <li><a href="debt.html">Проверить задолженность</a></li>
+          <li><a href="Регистрация.html">Выход</a></li>
+        </ul>
+      </nav>
+    </section>
+  </main>
+</body>
+</html>

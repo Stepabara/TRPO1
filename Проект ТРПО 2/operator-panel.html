@@ -1,0 +1,23 @@
+<?php
+$db = new PDO("sqlite:C:/Users/stepa/OneDrive/Desktop/Проект PTYO 2.www.db");
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$phone = $_POST['phone'] ?? '';
+$stmt = $db->prepare("SELECT * FROM clients WHERE phone = :phone");
+$stmt->bindParam(':phone', $phone);
+$stmt->execute();
+$client = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+<h1>Результат поиска</h1>
+<?php if ($client): ?>
+<ul>
+  <li>ФИО: <?= htmlspecialchars($client['name']) ?></li>
+  <li>Телефон: <?= htmlspecialchars($client['phone']) ?></li>
+  <li>Email: <?= htmlspecialchars($client['email']) ?></li>
+  <li>Статус: <?= htmlspecialchars($client['status']) ?></li>
+  <li>Баланс: <?= number_format($client['balance'], 2) ?> BYN</li>
+</ul>
+<?php else: ?>
+<p>Клиент не найден</p>
+<?php endif; ?>

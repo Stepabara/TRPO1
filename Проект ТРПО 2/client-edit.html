@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактирование клиента</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #2c2c2c;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    fieldset {
+      border: 1px solid #444;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: #3a3a3a;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #ffd700;
+      padding: 0 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #ccc;
+    }
+
+    input[type="tel"],
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #666;
+      border-radius: 5px;
+      background-color: #1e1e1e;
+      color: #fff;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0078D4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    nav {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    nav a {
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Редактирование данных клиента</h1>
+
+      <form action="/edit-client" method="post">
+        <fieldset>
+          <legend>Данные клиента</legend>
+
+          <label for="phone">Номер телефона:</label>
+          <input type="tel" id="phone" name="phone" pattern="^\+?\d{10,15}$" required
+                 placeholder="+375291234567">
+
+          <label for="name">ФИО:</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+
+          <label for="status">Статус клиента:</label>
+          <select id="status" name="status" required>
+            <option value="">-- Выберите статус --</option>
+            <option value="активен">Активен</option>
+            <option value="ограничен">Ограничен</option>
+            <option value="заблокирован">Заблокирован</option>
+          </select>
+
+          <button type="submit">Сохранить изменения</button>
+        </fieldset>
+      </form>
+
+      <nav>
+        <p><a href="operator-panel.html">Вернуться в панель оператора</a></p>
+      </nav>
+    </section>
+  </main>
+</body>
+</html>

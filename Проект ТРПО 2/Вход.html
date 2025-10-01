@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Авторизация клиента</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      max-width: 500px;
+      margin: 40px auto;
+      background-color: #2c2c2c;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    fieldset {
+      border: 1px solid #444;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: #3a3a3a;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #ffd700;
+      padding: 0 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #ccc;
+    }
+
+    input[type="tel"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #666;
+      border-radius: 5px;
+      background-color: #1e1e1e;
+      color: #fff;
+      box-sizing: border-box;
+    }
+
+    small {
+      font-size: 0.85em;
+      color: #999;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0078D4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    nav {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    nav a {
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    function redirectToCabinet(event) {
+      event.preventDefault();
+
+      const phone = document.getElementById("phone").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!phone || !password) {
+        alert("Пожалуйста, заполните все поля");
+        return false;
+      }
+
+      // Имитируем успешную авторизацию
+      setTimeout(() => {
+        window.location.href = "кабинет.html";
+      }, 500);
+    }
+
+    function togglePassword(id, checkboxId) {
+      const input = document.getElementById(id);
+      const checkbox = document.getElementById(checkboxId);
+      input.type = checkbox.checked ? "text" : "password";
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Вход в систему</h1>
+
+      <form action="/login" method="post" onsubmit="redirectToCabinet(event)">
+        <fieldset>
+          <legend>Данные для входа</legend>
+
+          <label for="phone">Номер телефона:</label>
+          <input type="tel" id="phone" name="phone" pattern="^\+?\d{10,15}$" required
+                 placeholder="+375291234567">
+          <small>Формат: +375XXXXXXXXX — без пробелов и скобок</small>
+
+          <label for="password">Пароль:</label>
+          <input type="password" id="password" name="password" required>
+          <label>
+            <input type="checkbox" id="showPassword" onclick="togglePassword('password', 'showPassword')">
+            Показать пароль
+          </label>
+
+          <button type="submit">Войти</button>
+        </fieldset>
+      </form>
+
+      <nav>
+        <p>Нет аккаунта? <a href="Регистрация.html">Зарегистрироваться</a></p>
+      </nav>
+    </section>
+  </main>
+</body>
+</html>
