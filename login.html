@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация с котиком - Мобильный оператор</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, 
+                #87CEEB 0%, 
+                #98FB98 25%, 
+                #FFD700 50%, 
+                #FFA07A 75%, 
+                #9370DB 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 450px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .cat-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px 30px 15px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cat-section::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -30%;
+            right: -30%;
+            bottom: -30%;
+            background: inherit;
+            z-index: -1;
+            transform: rotate(-3deg);
+        }
+
+        .form-section {
+            padding: 25px 40px 35px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 6px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            margin-bottom: 12px;
+            color: #5d6d7e;
+            font-size: 13px;
+        }
+
+        .cat-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 10px 0;
+        }
+
+        /* Стили котика в приятных цветах */
+        .cat-head {
+            position: absolute;
+            width: 140px;
+            height: 130px;
+            background: #ff9f43;
+            border-radius: 50%;
+            top: 25px;
+            left: 20px;
+            z-index: 1;
+        }
+
+        .cat-ears {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 40px solid #ff9f43;
+            top: 5px;
+            z-index: 0;
+        }
+
+        .cat-ear-left {
+            left: 28px;
+            transform: rotate(-15deg);
+        }
+
+        .cat-ear-right {
+            right: 28px;
+            transform: rotate(15deg);
+        }
+
+        .cat-ears::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-bottom: 25px solid #ff7f50;
+            top: 7px;
+            left: -14px;
+        }
+
+        .cat-eyes {
+            position: absolute;
+            width: 35px;
+            height: 45px;
+            background: rgb(255, 255, 255);
+            border-radius: 50%;
+            top: 60px;
+            z-index: 2;
+            transition: all 0.2s ease;
+            overflow: hidden;
+        }
+
+        .cat-eye-left {
+            left: 38px;
+        }
+
+        .cat-eye-right {
+            right: 38px;
+        }
+
+        .cat-pupils {
+            position: absolute;
+            width: 18px;
+            height: 25px;
+            background: #2c3e50;
+            border-radius: 50%;
+            top: 10px;
+            left: 8px;
+            transition: all 0.1s ease;
+        }
+
+        /* Реснички (появляются при закрытии глаз) */
+        .cat-eyelashes {
+            position: absolute;
+            width: 40px;
+            height: 8px;
+            background: #2c3e50;
+            border-radius: 4px;
+            top: 70px;
+            opacity: 0;
+            transition: all 0.2s ease;
+            z-index: 3;
+        }
+
+        .cat-eyelash-left {
+            left: 35px;
+        }
+
+        .cat-eyelash-right {
+            right: 35px;
+        }
+
+        .cat-nose {
+            position: absolute;
+            width: 18px;
+            height: 14px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            top: 105px;
+            left: 81px;
+            z-index: 2;
+        }
+
+        .cat-mouth {
+            position: absolute;
+            width: 28px;
+            height: 14px;
+            border-bottom: 3px solid #ff6b6b;
+            border-radius: 0 0 18px 18px;
+            top: 120px;
+            left: 76px;
+            z-index: 2;
+        }
+
+        .cat-cheeks {
+            position: absolute;
+            width: 25px;
+            height: 14px;
+            background: #ff7979;
+            border-radius: 50%;
+            top: 95px;
+            opacity: 0.6;
+        }
+
+        .cat-cheek-left {
+            left: 28px;
+        }
+
+        .cat-cheek-right {
+            right: 28px;
+        }
+
+        .cat-whiskers {
+            position: absolute;
+            width: 38px;
+            height: 1px;
+            background: #2c3e50;
+            top: 100px;
+        }
+
+        .cat-whisker-left-1 {
+            left: 7px;
+            transform: rotate(-15deg);
+        }
+
+        .cat-whisker-left-2 {
+            left: 7px;
+            transform: rotate(0deg);
+            top: 103px;
+        }
+
+        .cat-whisker-left-3 {
+            left: 7px;
+            transform: rotate(15deg);
+            top: 106px;
+        }
+
+        .cat-whisker-right-1 {
+            right: 7px;
+            transform: rotate(15deg);
+        }
+
+        .cat-whisker-right-2 {
+            right: 7px;
+            transform: rotate(0deg);
+            top: 103px;
+        }
+
+        .cat-whisker-right-3 {
+            right: 7px;
+            transform: rotate(-15deg);
+            top: 106px;
+        }
+
+        .form-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #4facfe;
+            background: white;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: white;
+            color: #4facfe;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: #4facfe;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 45px 15px 45px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            color: #2c3e50;
+        }
+
+        input:focus {
+            border-color: #4facfe;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        input::placeholder {
+            color: #aab8c2;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4facfe;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #4facfe;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a {
+            color: #4facfe;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #667eea;
+            text-decoration: underline;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .strength-weak { background: #e74c3c; width: 25%; }
+        .strength-medium { background: #f39c12; width: 50%; }
+        .strength-strong { background: #27ae60; width: 100%; }
+
+        .admin-info {
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 11px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .cat-section {
+                padding: 15px 20px 10px 20px;
+            }
+            
+            .form-section {
+                padding: 20px 20px 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cat-section">
+            <div class="company-name">Мобильный оператор</div>
+            <p class="subtitle">Добро пожаловать в систему управления</p>
+            
+            <div class="cat-container">
+                <!-- Уши -->
+                <div class="cat-ears cat-ear-left"></div>
+                <div class="cat-ears cat-ear-right"></div>
+                
+                <!-- Голова -->
+                <div class="cat-head"></div>
+                
+                <!-- Щёчки -->
+                <div class="cat-cheeks cat-cheek-left"></div>
+                <div class="cat-cheeks cat-cheek-right"></div>
+                
+                <!-- Глаза -->
+                <div class="cat-eyes cat-eye-left">
+                    <div class="cat-pupils" id="leftPupil"></div>
+                </div>
+                <div class="cat-eyes cat-eye-right">
+                    <div class="cat-pupils" id="rightPupil"></div>
+                </div>
+                
+                <!-- Реснички (скрыты по умолчанию) -->
+                <div class="cat-eyelashes cat-eyelash-left"></div>
+                <div class="cat-eyelashes cat-eyelash-right"></div>
+                
+                <!-- Носик и ротик -->
+                <div class="cat-nose"></div>
+                <div class="cat-mouth"></div>
+                
+                <!-- Усики -->
+                <div class="cat-whiskers cat-whisker-left-1"></div>
+                <div class="cat-whiskers cat-whisker-left-2"></div>
+                <div class="cat-whiskers cat-whisker-left-3"></div>
+                <div class="cat-whiskers cat-whisker-right-1"></div>
+                <div class="cat-whiskers cat-whisker-right-2"></div>
+                <div class="cat-whiskers cat-whisker-right-3"></div>
+            </div>
+            
+            <div class="admin-info">
+               <h1>Батон все видит!</h1>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="form-tabs">
+                <button class="tab active" onclick="showTab('login')">Вход</button>
+                <button class="tab" onclick="showTab('register')">Регистрация</button>
+            </div>
+            
+            <div id="login" class="tab-content active">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginPhone">Номер телефона</label>
+                        <div class="input-with-icon">
+                            <i class="input-icon">📱</i>
+                            <input type="tel" id="loginPhone" placeholder="+375 25 608 2909" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">Пароль</label>
+                        <div class="input-with-icon">
+                            <i class="input-icon">🔒</i>
+                            <input type="password" id="loginPassword" placeholder="Введите пароль" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', 'loginPasswordToggle')">
+                                <span id="loginPasswordToggle">👁️</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="loginBtn">
+                        <span id="loginText">Войти</span>
+                        <div class="loading" id="loginLoading" style="display: none;"></div>
+                    </button>
+                    
+                    <div class="forgot-password">
+                        <a href="#">Забыли пароль?</a>
+                    </div>
+                </form>
+
+                <div id="loginMessage" class="message"></div>
+            </div>
+            
+            <div id="register" class="tab-content">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerFio">ФИО</label>
+                        <div class="input-with-icon">
+                            <i class="input-icon">👤</i>
+                            <input type="text" id="registerFio" placeholder="Введите ваше ФИО" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPhone">Номер телефона</label>
+                        <div class="input-with-icon">
+                            <i class="input-icon">📱</i>
+                            <input type="tel" id="registerPhone" placeholder="+375 25 123 4567" required oninput="checkAdminPhone()">
+                        </div>
+                        <div class="form-text" id="adminPhoneWarning" style="font-size: 12px; color: #e74c3c; display: none;">
+                            Этот номер зарезервирован для администратора
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword">Пароль</label>
+                        <div class="input-with-icon">
+                            <i class="input-icon">🔒</i>
+                            <input type="password" id="registerPassword" placeholder="Придумайте пароль" required minlength="6" oninput="checkPasswordStrength()">
+                            <button type="button" class="password-toggle" onclick="togglePassword('registerPassword', 'registerPasswordToggle')">
+                                <span id="registerPasswordToggle">👁️</span>
+                            </button>
+                        </div>
+                        <div class="password-strength" id="passwordStrength"></div>
+                        <div class="form-text" style="font-size: 12px; color: #7f8c8d;">Минимум 6 символов</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Подтверждение пароля</label>
+                        <div class="input-with-icon">
+                            <i class="input-icon">🔒</i>
+                            <input type="password" id="confirmPassword" placeholder="Повторите пароль" required minlength="6" oninput="checkPasswordMatch()">
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword', 'confirmPasswordToggle')">
+                                <span id="confirmPasswordToggle">👁️</span>
+                            </button>
+                        </div>
+                        <div class="form-text" id="passwordMatchText" style="font-size: 12px;"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="registerBtn">
+                        <span id="registerText">Зарегистрироваться</span>
+                        <div class="loading" id="registerLoading" style="display: none;"></div>
+                    </button>
+                </form>
+
+                <div id="registerMessage" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Константы
+        const ADMIN_PHONE = '+375256082909';
+        const DEFAULT_TARIFF = 'Стандарт';
+
+        // Функция переключения видимости пароля
+        function togglePassword(passwordFieldId, toggleIconId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const toggleIcon = document.getElementById(toggleIconId);
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.textContent = '🔒';
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+
+        // Переключение между вкладками
+        function showTab(tabName) {
+            // Скрыть все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Показать выбранную вкладку
+            document.getElementById(tabName).classList.add('active');
+            
+            // Обновить активную кнопку
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Скрыть сообщения при переключении вкладок
+            hideAllMessages();
+        }
+
+        // Проверка номера администратора
+        function checkAdminPhone() {
+            const phone = document.getElementById('registerPhone').value;
+            const warning = document.getElementById('adminPhoneWarning');
+            const registerBtn = document.getElementById('registerBtn');
+            
+            // Нормализуем номер для сравнения (убираем пробелы, дефисы и т.д.)
+            const normalizedPhone = phone.replace(/[\s\-\(\)]/g, '');
+            const normalizedAdminPhone = ADMIN_PHONE.replace(/[\s\-\(\)]/g, '');
+            
+            if (normalizedPhone === normalizedAdminPhone) {
+                warning.style.display = 'block';
+                registerBtn.disabled = true;
+                registerBtn.style.background = '#e74c3c';
+            } else {
+                warning.style.display = 'none';
+                registerBtn.disabled = false;
+                registerBtn.style.background = '';
+            }
+        }
+
+        // Функции для работы с паролем
+        function checkPasswordStrength() {
+            const password = document.getElementById('registerPassword').value;
+            const strengthBar = document.getElementById('passwordStrength');
+            
+            let strength = 'weak';
+            if (password.length >= 8) {
+                strength = 'strong';
+            } else if (password.length >= 6) {
+                strength = 'medium';
+            }
+            
+            strengthBar.className = 'password-strength strength-' + strength;
+        }
+
+        function checkPasswordMatch() {
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const matchText = document.getElementById('passwordMatchText');
+            
+            if (confirmPassword === '') {
+                matchText.textContent = 'Подтвердите пароль';
+                matchText.style.color = '#7f8c8d';
+            } else if (password === confirmPassword) {
+                matchText.innerHTML = '✓ Пароли совпадают';
+                matchText.style.color = '#27ae60';
+            } else {
+                matchText.innerHTML = '✗ Пароли не совпадают';
+                matchText.style.color = '#e74c3c';
+            }
+        }
+
+        // Функции для сообщений
+        function showMessage(elementId, message, type) {
+            const messageEl = document.getElementById(elementId);
+            messageEl.textContent = message;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            
+            // Автоскрытие для успешных сообщений
+            if (type === 'success') {
+                setTimeout(() => {
+                    messageEl.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        function hideAllMessages() {
+            document.querySelectorAll('.message').forEach(msg => {
+                msg.style.display = 'none';
+            });
+        }
+
+        // Функции для загрузки
+        function setLoading(buttonId, loadingId, textId, isLoading) {
+            const button = document.getElementById(buttonId);
+            const loading = document.getElementById(loadingId);
+            const text = document.getElementById(textId);
+            
+            if (isLoading) {
+                button.disabled = true;
+                loading.style.display = 'inline-block';
+                text.textContent = 'Загрузка...';
+            } else {
+                button.disabled = false;
+                loading.style.display = 'none';
+                text.textContent = buttonId === 'loginBtn' ? 'Войти' : 'Зарегистрироваться';
+            }
+        }
+
+        // Анимация котика
+        const inputs = document.querySelectorAll('input');
+        const catEyes = document.querySelectorAll('.cat-eyes');
+        const leftPupil = document.getElementById('leftPupil');
+        const rightPupil = document.getElementById('rightPupil');
+        const catEyelashes = document.querySelectorAll('.cat-eyelashes');
+        const catContainer = document.querySelector('.cat-container');
+        
+        let catRect = catContainer.getBoundingClientRect();
+        let catCenterX = catRect.left + catRect.width / 2;
+        let catCenterY = catRect.top + catRect.height / 2;
+        
+        let lastMouseMoveTime = 0;
+        const MOUSE_UPDATE_DELAY = 16;
+        
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastMouseMoveTime < MOUSE_UPDATE_DELAY) return;
+            lastMouseMoveTime = now;
+            
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            
+            const deltaX = mouseX - catCenterX;
+            const deltaY = mouseY - catCenterY;
+            const angle = Math.atan2(deltaY, deltaX);
+            
+            const maxOffset = 6;
+            const offsetX = Math.cos(angle) * maxOffset;
+            const offsetY = Math.sin(angle) * maxOffset;
+            
+            leftPupil.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            rightPupil.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        });
+        
+        function closeCatEyes() {
+            catEyes.forEach(eye => {
+                eye.style.height = '6px';
+                eye.style.top = '70px';
+            });
+            
+            leftPupil.style.opacity = '0';
+            rightPupil.style.opacity = '0';
+            
+            // Показываем реснички
+            catEyelashes.forEach(lashes => {
+                lashes.style.opacity = '1';
+            });
+        }
+        
+        function openCatEyes() {
+            catEyes.forEach(eye => {
+                eye.style.height = '45px';
+                eye.style.top = '60px';
+            });
+            
+            leftPupil.style.opacity = '1';
+            rightPupil.style.opacity = '1';
+            
+            // Скрываем реснички
+            catEyelashes.forEach(lashes => {
+                lashes.style.opacity = '0';
+            });
+        }
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', closeCatEyes);
+            input.addEventListener('blur', openCatEyes);
+            input.addEventListener('mousedown', closeCatEyes);
+            input.addEventListener('touchstart', closeCatEyes);
+        });
+
+        // Обработка формы входа
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const phone = document.getElementById('loginPhone').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Валидация
+            if (!phone || !password) {
+                showMessage('loginMessage', 'Заполните все поля', 'error');
+                return;
+            }
+
+            setLoading('loginBtn', 'loginLoading', 'loginText', true);
+            hideAllMessages();
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, password })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage('loginMessage', `✅ Успешный вход! Перенаправление...`, 'success');
+                    
+                    // Сохраняем данные пользователя в localStorage
+                    localStorage.setItem('currentUser', JSON.stringify(result.user));
+                    console.log('Данные пользователя сохранены:', result.user);
+                    
+                    // Котик радуется
+                    makeCatHappy();
+                    
+                    // Перенаправление через 1 секунду
+                    setTimeout(() => {
+                        window.location.href = result.redirect;
+                    }, 1000);
+                } else {
+                    showMessage('loginMessage', `❌ ${result.message}`, 'error');
+                    // Котик грустит
+                    makeCatSad();
+                }
+            } catch (error) {
+                showMessage('loginMessage', '❌ Ошибка соединения с сервером', 'error');
+                makeCatSad();
+            } finally {
+                setLoading('loginBtn', 'loginLoading', 'loginText', false);
+            }
+        });
+
+        // Обработка формы регистрации с добавлением тарифа "Стандарт"
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fio = document.getElementById('registerFio').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Проверка номера администратора
+            const normalizedPhone = phone.replace(/[\s\-\(\)]/g, '');
+            const normalizedAdminPhone = ADMIN_PHONE.replace(/[\s\-\(\)]/g, '');
+            
+            if (normalizedPhone === normalizedAdminPhone) {
+                showMessage('registerMessage', '❌ Этот номер телефона зарезервирован', 'error');
+                return;
+            }
+
+            // Валидация
+            if (!fio || !phone || !password || !confirmPassword) {
+                showMessage('registerMessage', 'Заполните все поля', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('registerMessage', 'Пароль должен содержать минимум 6 символов', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage('registerMessage', 'Пароли не совпадают', 'error');
+                return;
+            }
+
+            setLoading('registerBtn', 'registerLoading', 'registerText', true);
+            hideAllMessages();
+
+            try {
+                // ★★★★ ДОБАВЛЯЕМ ТАРИФ "СТАНДАРТ" К ДАННЫМ РЕГИСТРАЦИИ ★★★★
+                const userData = { 
+                    fio, 
+                    phone, 
+                    password,
+                    tariff: DEFAULT_TARIFF  // Автоматически назначаем тариф "Стандарт"
+                };
+
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage('registerMessage', `✅ ${result.message}`, 'success');
+                    
+                    // Сохраняем данные пользователя при регистрации
+                    if (result.user) {
+                        // Убедимся, что тариф тоже сохраняется
+                        const userWithTariff = {
+                            ...result.user,
+                            tariff: result.user.tariff || DEFAULT_TARIFF
+                        };
+                        localStorage.setItem('currentUser', JSON.stringify(userWithTariff));
+                        console.log('Пользователь зарегистрирован с тарифом:', userWithTariff.tariff);
+                    }
+                    
+                    makeCatHappy();
+                    
+                    // Очистка формы и переключение на вход
+                    document.getElementById('registerForm').reset();
+                    document.getElementById('passwordStrength').className = 'password-strength';
+                    document.getElementById('passwordMatchText').textContent = '';
+                    document.getElementById('adminPhoneWarning').style.display = 'none';
+                    
+                    setTimeout(() => {
+                        showTab('login');
+                    }, 2000);
+                } else {
+                    showMessage('registerMessage', `❌ ${result.message}`, 'error');
+                    makeCatSad();
+                }
+            } catch (error) {
+                showMessage('registerMessage', '❌ Ошибка соединения с сервером', 'error');
+                makeCatSad();
+            } finally {
+                setLoading('registerBtn', 'registerLoading', 'registerText', false);
+            }
+        });
+
+        // Анимации котика для разных состояний
+        function makeCatHappy() {
+            const mouth = document.querySelector('.cat-mouth');
+            mouth.style.borderBottom = '3px solid #27ae60';
+            mouth.style.borderRadius = '18px 18px 0 0';
+            mouth.style.transform = 'scale(1.2)';
+            
+            setTimeout(() => {
+                mouth.style.borderBottom = '3px solid #ff6b6b';
+                mouth.style.borderRadius = '0 0 18px 18px';
+                mouth.style.transform = 'scale(1)';
+            }, 1000);
+        }
+
+        function makeCatSad() {
+            const mouth = document.querySelector('.cat-mouth');
+            mouth.style.borderBottom = '3px solid #e74c3c';
+            mouth.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                mouth.style.borderBottom = '3px solid #ff6b6b';
+                mouth.style.transform = 'scale(1)';
+            }, 1000);
+        }
+
+        // Обновляем позицию котика при изменении размера окна
+        window.addEventListener('resize', () => {
+            catRect = catContainer.getBoundingClientRect();
+            catCenterX = catRect.left + catRect.width / 2;
+            catCenterY = catRect.top + catRect.height / 2;
+        });
+
+        // Случайные моргания котика
+        setInterval(() => {
+            if (!document.querySelector('input:focus')) {
+                closeCatEyes();
+                setTimeout(openCatEyes, 120);
+            }
+        }, 2500);
+    </script>
+</body>
+</html>
